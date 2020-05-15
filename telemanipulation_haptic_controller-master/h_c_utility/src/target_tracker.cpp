@@ -172,7 +172,8 @@ Eigen::Matrix4d TargetTracker::input_forward(Eigen::Matrix4d input_mat)
   rotation_input *= rot_mat;
 
   result = panda_ref * input_mat * reference_pose.inverse();
-  result.block<3,3>(0,0) = rotation_input;
+  //apply all rotations up to now
+  result.block<3,3>(0,0) *= rotation_input;
 
   return result;
 }
