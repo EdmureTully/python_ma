@@ -1,0 +1,7 @@
+<library path="lib/libh_c_utility">
+  <class name="h_c_utility" type="h_c_utility" base_class_type="">
+    <description>
+      Utility library
+    </description>
+  </class>
+</library>

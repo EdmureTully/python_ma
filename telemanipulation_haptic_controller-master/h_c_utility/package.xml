@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>h_c_utility</name>
+  <version>0.0.0</version>
+  <description>utility lib</description>
+
+  <maintainer email="uksfx@student.kit.edu">Constantin Bogedain</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>eigen_conversions</depend>
+  <depend>roscpp</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf</depend>
+  <export>
+  </export>
+</package>
