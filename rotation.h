@@ -30,3 +30,24 @@ double distance_euler_angles(const Eigen::Vector3d& angle1, const Eigen::Vector3
 double rotation_matrix_deviation(const Eigen::Matrix3d& rot_mat1, const Eigen::Matrix3d& rot_mat2);
 
 std::vector<double> calculate_relative_difference(const std::vector<double>& values);
+
+class roll_dummy {
+public:
+	roll_dummy();
+	~roll_dummy();
+	
+	void test_wrap_angle();
+
+
+
+private:
+
+	
+
+	double wrap_angle(double prev_angle, double angle);
+
+	Eigen::Matrix3d calc_rot_mat_x(double angle);
+
+	int counter = 0;
+	double prev_angle, angle;
+};

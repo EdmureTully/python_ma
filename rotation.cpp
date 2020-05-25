@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "rotation.h"
 #include<vector>
+#include <iostream>
 
 #define _USE_MATH_DEFINES
 #include<math.h>
@@ -155,4 +156,85 @@ std::vector<double> calculate_relative_difference(const std::vector<double>& val
 	}
 
 	return rel_diff;
+}
+
+roll_dummy::roll_dummy()
+{
+}
+
+roll_dummy::~roll_dummy()
+{
+}
+
+void roll_dummy::test_wrap_angle()
+{
+	std::vector<double> values;
+
+	for (double i = 0.0; i < M_PI; i += 0.1) {
+		values.push_back(-i);
+	}
+
+	std::vector<double> copy_values = values;
+
+	values.push_back(-M_PI);
+	values.insert(values.end(), copy_values.begin(), copy_values.end());
+	
+	values.push_back(-M_PI);
+	values.insert(values.end(), copy_values.begin(), copy_values.end());
+	values.push_back(-M_PI);
+	values.insert(values.end(), copy_values.begin(), copy_values.end());
+	std::vector<double>::iterator iter(values.begin()), end(values.end());
+	
+	double prev_angle(0.0), angle(0.0);
+
+	for (; iter != end; iter++) {
+		angle = *iter;
+		double test = wrap_angle(prev_angle, angle);
+		Eigen::Matrix3d rot_mat = calc_rot_mat_x(test);
+		std::cout << test << std::endl;
+		std::cout << "rot matrix" << std::endl;
+		std::cout << rot_mat << std::endl;
+
+		prev_angle = angle;
+	}
+
+}
+
+double roll_dummy::wrap_angle(double prev_angle, double angle)
+{
+	double diff = angle - prev_angle;
+
+	if (diff <= -M_PI) {
+		if (counter != 0) {
+			counter = 0;
+		}
+		else {
+			counter = -1;
+		}
+	}
+
+	if (diff >= M_PI) {
+		if (counter != 0) {
+			counter = 0;
+		}
+		else {
+			counter = 1;
+		}
+	}
+
+	angle = counter * M_PI + angle;
+
+	return angle;
+}
+
+Eigen::Matrix3d roll_dummy::calc_rot_mat_x(double angle)
+{
+	Eigen::Matrix3d rot = Eigen::Matrix3d::Identity();
+
+	rot(1, 1) = std::cos(angle);
+	rot(1, 2) = -std::sin(angle);
+	rot(2, 1) = std::sin(angle);
+	rot(2, 2) = std::cos(angle);
+
+	return rot;
 }
